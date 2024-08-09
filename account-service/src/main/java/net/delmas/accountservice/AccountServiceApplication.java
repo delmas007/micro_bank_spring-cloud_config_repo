@@ -1,5 +1,6 @@
 package net.delmas.accountservice;
 
+import net.delmas.accountservice.Clients.CustomerRestClient;
 import net.delmas.accountservice.Enum.AccountType;
 import net.delmas.accountservice.Model.BankAccount;
 import net.delmas.accountservice.Repository.BankAccountRepository;
@@ -21,7 +22,25 @@ public class AccountServiceApplication {
         SpringApplication.run(AccountServiceApplication.class, args);
     }
     @Bean
-    CommandLineRunner start(BankAccountRepository bankAccountRepository) {
+    CommandLineRunner start(BankAccountRepository bankAccountRepository, CustomerRestClient customerRestClient) {
+        customerRestClient.allCustomers().forEach(customer -> {
+            BankAccount.builder()
+                    .accountId(UUID.randomUUID().toString())
+                    .currency("FCFA")
+                    .balance(Math.random()*80000)
+                    .type(AccountType.SAVING_ACCOUNT)
+                    .customerId(customer.getId())
+                    .creationAt(LocalDate.now())
+                    .build();
+            BankAccount.builder()
+                    .accountId(UUID.randomUUID().toString())
+                    .currency("FCFA")
+                    .balance(Math.random()*50600)
+                    .type(AccountType.SAVING_ACCOUNT)
+                    .customerId(customer.getId())
+                    .creationAt(LocalDate.now())
+                    .build();
+        });
         return args -> {
             List<BankAccount> bankAccountList = List.of(
                     BankAccount.builder()
