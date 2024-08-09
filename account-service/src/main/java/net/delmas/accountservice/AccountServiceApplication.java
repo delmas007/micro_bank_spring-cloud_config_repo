@@ -23,44 +23,28 @@ public class AccountServiceApplication {
     }
     @Bean
     CommandLineRunner start(BankAccountRepository bankAccountRepository, CustomerRestClient customerRestClient) {
-        customerRestClient.allCustomers().forEach(customer -> {
-            BankAccount.builder()
-                    .accountId(UUID.randomUUID().toString())
-                    .currency("FCFA")
-                    .balance(Math.random()*80000)
-                    .type(AccountType.SAVING_ACCOUNT)
-                    .customerId(customer.getId())
-                    .creationAt(LocalDate.now())
-                    .build();
-            BankAccount.builder()
-                    .accountId(UUID.randomUUID().toString())
-                    .currency("FCFA")
-                    .balance(Math.random()*50600)
-                    .type(AccountType.SAVING_ACCOUNT)
-                    .customerId(customer.getId())
-                    .creationAt(LocalDate.now())
-                    .build();
-        });
         return args -> {
-            List<BankAccount> bankAccountList = List.of(
-                    BankAccount.builder()
-                            .accountId(UUID.randomUUID().toString())
-                            .currency("FCFA")
-                            .balance(1500000)
-                            .type(AccountType.SAVING_ACCOUNT)
-                            .customerId(Long.valueOf(1))
-                            .creationAt(LocalDate.now())
-                            .build(),
-                    BankAccount.builder()
-                            .accountId(UUID.randomUUID().toString())
-                            .currency("FCFA")
-                            .balance(20000000)
-                            .type(AccountType.SAVING_ACCOUNT)
-                            .customerId(Long.valueOf(2))
-                            .creationAt(LocalDate.now())
-                            .build()
-            );
-            bankAccountRepository.saveAll(bankAccountList);
+            customerRestClient.allCustomers().forEach(customer -> {
+                BankAccount bank2 = BankAccount.builder()
+                        .accountId(UUID.randomUUID().toString())
+                        .currency("FCFA")
+                        .balance(Math.random()*80000)
+                        .type(AccountType.SAVING_ACCOUNT)
+                        .customerId(customer.getId())
+                        .creationAt(LocalDate.now())
+                        .build();
+                BankAccount bank1 =BankAccount.builder()
+                        .accountId(UUID.randomUUID().toString())
+                        .currency("FCFA")
+                        .balance(Math.random()*50600)
+                        .type(AccountType.SAVING_ACCOUNT)
+                        .customerId(customer.getId())
+                        .creationAt(LocalDate.now())
+                        .build();
+                bankAccountRepository.save(bank1);
+                bankAccountRepository.save(bank2);
+            });
+
         };
     }
 
