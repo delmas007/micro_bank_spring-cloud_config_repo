@@ -2,14 +2,17 @@ package net.delmas.customerservice;
 
 import net.delmas.customerservice.Model.Customer;
 import net.delmas.customerservice.Repository.CustomerRepository;
+import net.delmas.customerservice.config.GlobalConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
 @SpringBootApplication
+@EnableConfigurationProperties({GlobalConfig.class})
 public class CustomerServiceApplication {
 
 	public static void main(String[] args) {
