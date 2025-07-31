@@ -70,10 +70,10 @@ services:
     depends_on:
       config-service:
         condition: service_healthy
-#  front-send-angular:
-#    build: ./angular-front-end
-#    container_name: front-send-angular
-#    ports:
-#      - '82:80'
-#    expose:
-#      - '82'
+  front-end-angular:
+    build: ./front-angular
+    container_name: front-end-angular
+    ports:
+      - '82:80'
+    expose:
+      - '82'
