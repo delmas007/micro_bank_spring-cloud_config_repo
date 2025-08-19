@@ -77,3 +77,4 @@ services:
       - '82:80'
     expose:
       - '82'
+    restart: always
